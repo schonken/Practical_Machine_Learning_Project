@@ -10,6 +10,8 @@ output:
 ### Synopsis
 This report endeavours to apply machine learning the Human Activity Recognition [Weight Lifting Exercises Dataset](http://groupware.les.inf.puc-rio.br/har#weight_lifting_exercises) in an effort to predict the ```classe``` of a sinlge bi-cep curl. We start by exploring the 160 variable dataset and the removing variables (columns) we do not feel add value to our machine learning endevour. We then split our training data into train and test subsets. We implement a Random Forest machine learning strategy against the train data and then proceed to review our outside error rate by applying our model to the test subset. In conclusion we prepare the predictions for the 20 test cases provided.
 
+The GitHub repository for this projects can be found [here](https://github.com/schonken/Practical_Machine_Learning_Project).
+
 ### Data Dictionary
 The data dictionary spans 160 variables. In an effort to keep this lean I refer you [here](http://groupware.les.inf.puc-rio.br/har#weight_lifting_exercises#ixzz3MWksZVLK) should you wish to read more on the detail contained in this dataset. One element I wish to elaborate of however is the meaning of the various classe detailed below: 
 

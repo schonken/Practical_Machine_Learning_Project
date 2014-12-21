@@ -81,24 +81,6 @@ print(dataTest.predict)
 outsideErrorRate.accuracy <- sum(dataTrain.test.predict == dataTrain.test$classe)/length(dataTrain.test.predict)
 outsideErrorRate.error <- (1 - outsideErrorRate.accuracy)
 
-# 
-# # Print model confusion matrix
-# print(confusionMatrix(dataTrain.test$classe, dataTrain.test.predict))
-# 
-# # Print Model
-# print(dataTrain.model)
-# print(confusionMatrix(dataTrain.model))
-# 
-# Plot our models performance
-# print(
-#   plot(
-#     dataTrain.model, 
-#     #log = "y",
-#     #main = "Model accuracy",
-#     #xlab = "Predictors",
-#     #ylab = "Accuracy"
-#   ))
-
 print(
   ggplot(dataTrain.model) + ggtitle("Accuracy vs. Predictor")
   )
