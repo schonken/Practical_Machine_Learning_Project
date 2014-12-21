@@ -23,7 +23,7 @@ Class C | Lifting the dumbbell only halfway
 Class D | Lowering the dumbbell only halfway
 Class E | Throwing the hips to the front
 
-### Data Processing
+### Getting our Data
 Start by initializing a few R libraries. Turn echo on for R code chunks, center figures and suppress messages. We also hard code the seed value in an effort to achive reproducibility.
 ```{r, echo=TRUE, message=FALSE, cache=FALSE}
 require(knitr)
@@ -41,7 +41,7 @@ if (!exists("dataTrain.raw")){dataTrain.raw <- read.csv('data/pml-training.csv')
 if (!exists("dataTest.raw")){dataTest.raw <- read.csv('data/pml-testing.csv')}
 ```
 
-### Cleaning 
+### Cleaning our Data
 Folowing the above mentioned dataset reads we review the ```dataTrain.raw``` data frame using both ```summary(dataTrain.raw)``` and ```head(dataTrain.raw)```. The output of the ```summary(dataTrain.raw)``` and ```head(dataTrain.raw)``` command have been relegated to dedicated Appendixes in an effort to keep this section clean and easy to read. 
 
 From the cursory review of the data is becomes very clear many of the fields are only populated when the ```New_Window``` variable is Yes and as far as we can tell this adds no value to our training exercise. We create the following function to drop the vaiables we do not believe will add value to our machine learing.  
@@ -111,7 +111,7 @@ if (!exists("dataTrain.model")){
 }
 ```
 
-### Create our machine learning model
+### Create our Machine Learning Model
 We call on the ```train()``` function to create our model using the newly cleaned training data frame. And we immediatly set about calling on our model to predict our test
 
 ```{r}
@@ -125,7 +125,7 @@ if (!exists("dataTrain.model")){
 dataTrain.test.predict <- predict(dataTrain.model, newdata=dataTrain.test)
 ```
 
-### Review our model's accuracy and cross validation
+### Review our Model's Reliability
 The first big question we need to answer is what is our outside error rate. 
 ```{r}
 outsideErrorRate.accuracy <- sum(dataTrain.test.predict == dataTrain.test$classe)/length(dataTrain.test.predict)

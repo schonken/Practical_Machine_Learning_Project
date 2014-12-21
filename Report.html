@@ -97,8 +97,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </tbody>
 </table>
 </div>
-<div id="data-processing" class="section level3">
-<h3>Data Processing</h3>
+<div id="getting-our-data" class="section level3">
+<h3>Getting our Data</h3>
 <p>Start by initializing a few R libraries. Turn echo on for R code chunks, center figures and suppress messages. We also hard code the seed value in an effort to achive reproducibility.</p>
 <pre class="r"><code>require(knitr)
 require(ggplot2)
@@ -111,8 +111,8 @@ opts_chunk$set(echo=TRUE, fig.align='center', message=FALSE, cache=TRUE)</code><
 <pre class="r"><code>if (!exists(&quot;dataTrain.raw&quot;)){dataTrain.raw &lt;- read.csv('data/pml-training.csv')}
 if (!exists(&quot;dataTest.raw&quot;)){dataTest.raw &lt;- read.csv('data/pml-testing.csv')}</code></pre>
 </div>
-<div id="cleaning" class="section level3">
-<h3>Cleaning</h3>
+<div id="cleaning-our-data" class="section level3">
+<h3>Cleaning our Data</h3>
 <p>Folowing the above mentioned dataset reads we review the <code>dataTrain.raw</code> data frame using both <code>summary(dataTrain.raw)</code> and <code>head(dataTrain.raw)</code>. The output of the <code>summary(dataTrain.raw)</code> and <code>head(dataTrain.raw)</code> command have been relegated to dedicated Appendixes in an effort to keep this section clean and easy to read.</p>
 <p>From the cursory review of the data is becomes very clear many of the fields are only populated when the <code>New_Window</code> variable is Yes and as far as we can tell this adds no value to our training exercise. We create the following function to drop the vaiables we do not believe will add value to our machine learing.</p>
 <pre class="r"><code>pml_data_column_cleanup = function(df){
@@ -175,7 +175,7 @@ if (!exists(&quot;dataTrain.model&quot;)){
 }</code></pre>
 </div>
 <div id="create-our-machine-learning-model" class="section level3">
-<h3>Create our machine learning model</h3>
+<h3>Create our Machine Learning Model</h3>
 <p>We call on the <code>train()</code> function to create our model using the newly cleaned training data frame. And we immediatly set about calling on our model to predict our test</p>
 <pre class="r"><code># The train() takes a fair bit of time so only do it when necessary
 if (!exists(&quot;dataTrain.model&quot;)){
@@ -186,8 +186,8 @@ if (!exists(&quot;dataTrain.model&quot;)){
 # Train Test prediction
 dataTrain.test.predict &lt;- predict(dataTrain.model, newdata=dataTrain.test)</code></pre>
 </div>
-<div id="review-our-models-accuracy-and-cross-validation" class="section level3">
-<h3>Review our model’s accuracy and cross validation</h3>
+<div id="review-our-models-reliability" class="section level3">
+<h3>Review our Model’s Reliability</h3>
 <p>The first big question we need to answer is what is our outside error rate.</p>
 <pre class="r"><code>outsideErrorRate.accuracy &lt;- sum(dataTrain.test.predict == dataTrain.test$classe)/length(dataTrain.test.predict)
 outsideErrorRate.error &lt;- (1 - outsideErrorRate.accuracy)</code></pre>
