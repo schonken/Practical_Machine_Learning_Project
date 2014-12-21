@@ -2,12 +2,14 @@
 Francois Schonken  
 
 ### Synopsis
-This report endeavours to apply machine learning the Human Activity Recognition [Weight Lifting Exercises Dataset](http://groupware.les.inf.puc-rio.br/har#weight_lifting_exercises) in an effort to predict the ```classe``` of a sinlge bi-cep curl. We start by exploring the 160 variable dataset and the removing variables (columns) we do not feel add value to our machine learning endevour. We then split our training data into train and test subsets. We implement a Random Forest machine learning strategy against the train data and then proceed to review our outside error rate by applying our model to the test subset. In conclusion we prepare the predictions for the 20 test cases provided.
+This report endeavours to apply machine learning to the Human Activity Recognition [Weight Lifting Exercises Dataset](http://groupware.les.inf.puc-rio.br/har#weight_lifting_exercises) in an effort to predict the ```classe``` of a sinlge bi-cep curl. 
+
+We start by exploring the 160 variable dataset and removing variables we do not feel add value to our machine learning. We then split our training data into train and test subsets. We implement a Random Forest machine learning strategy against the train data and then proceed to review our outside error rate by applying our model to the test subset. In conclusion we prepare the predictions for the 20 test cases provided.
 
 The GitHub repository for this projects can be found [here](https://github.com/schonken/Practical_Machine_Learning_Project).
 
 ### Data Dictionary
-The data dictionary spans 160 variables. In an effort to keep this lean I refer you [here](http://groupware.les.inf.puc-rio.br/har#weight_lifting_exercises#ixzz3MWksZVLK) should you wish to read more on the detail contained in this dataset. One element I wish to elaborate of however is the meaning of the various classe detailed below: 
+The data dictionary spans 160 variables. In an effort to keep this report lean, refer [here](http://groupware.les.inf.puc-rio.br/har#weight_lifting_exercises#ixzz3MWksZVLK) for more on the detail contained in this dataset. One element I wish to elaborate on is the meaning of the various ```classe``` detailed below: 
 
 Classe | Definition
 -------|-----------
@@ -18,7 +20,7 @@ Class D | Lowering the dumbbell only halfway
 Class E | Throwing the hips to the front
 
 ### Getting our Data
-Start by initializing a few R libraries. Turn echo on for R code chunks, center figures and suppress messages. We also hard code the seed value in an effort to achive reproducibility.
+Start by initializing a few R libraries. Turn echo on for R code chunks, center figures and suppress messages. We also hard code the seed value in an effort to ensure reproducibility.
 
 ```r
 require(knitr)
@@ -30,7 +32,7 @@ set.seed(98765)
 opts_chunk$set(echo=TRUE, fig.align='center', message=FALSE, cache=TRUE)
 ```
 
-We read the training and testing data into the ```dataTrain.raw``` and ```dataTest.raw``` variables respectively. 
+We read the training and testing data into the ```dataTrain.raw``` and ```dataTest.raw``` variables respectively.
 
 ```r
 if (!exists("dataTrain.raw")){dataTrain.raw <- read.csv('data/pml-training.csv')}
@@ -38,9 +40,9 @@ if (!exists("dataTest.raw")){dataTest.raw <- read.csv('data/pml-testing.csv')}
 ```
 
 ### Cleaning our Data
-Folowing the above mentioned dataset reads we review the ```dataTrain.raw``` data frame using both ```summary(dataTrain.raw)``` and ```head(dataTrain.raw)```. The output of the ```summary(dataTrain.raw)``` and ```head(dataTrain.raw)``` command have been relegated to dedicated Appendixes in an effort to keep this section clean and easy to read. 
+Following the above-mentioned dataset reads, we review the ```dataTrain.raw``` data frame using both ```summary(dataTrain.raw)``` and ```head(dataTrain.raw)```. The sample output of the ```summary(dataTrain.raw)``` and ```head(dataTrain.raw)``` commands have been relegated to dedicated Appendixes in an effort to keep this section clean and easy to read. 
 
-From the cursory review of the data is becomes very clear many of the fields are only populated when the ```New_Window``` variable is Yes and as far as we can tell this adds no value to our training exercise. We create the following function to drop the vaiables we do not believe will add value to our machine learing.  
+From the cursory review of the data it becomes clear many of the fields are only populated when the ```New_Window``` variable is Yes and as far as we can tell this adds no value to our training exercise. We create the following function to drop the variables we do not believe will add value to our machine learning.  
 
 
 ```r
@@ -110,7 +112,7 @@ if (!exists("dataTrain.model")){
 ```
 
 ### Create our Machine Learning Model
-We call on the ```train()``` function to create our model using the newly cleaned training data frame. And we immediatly set about calling on our model to predict our test
+We call on the ```train()``` function to create our model using the newly cleaned training data frame. And we immediately call on our model to predict our test data.
 
 
 ```r
@@ -131,7 +133,7 @@ The first big question we need to answer is what is our outside error rate.
 outsideErrorRate.accuracy <- sum(dataTrain.test.predict == dataTrain.test$classe)/length(dataTrain.test.predict)
 outsideErrorRate.error <- (1 - outsideErrorRate.accuracy)
 ```
-We find the outside error rate accuracy to be 0.9937 and our error to be 0.0063. Our model seems higly accurate, now we need to do a bit of cross validation. We start by comparing our test ```classe``` with our test predictions using the ```confusionMatrix()``` function.
+We find the Outside Error Rate Accuracy to be 0.9937 and our Outside Error Rate Error to be 0.0063. Our model seems higly accurate, now we need to do a bit of cross validation. We start by comparing our test ```classe``` with our test predictions using the ```confusionMatrix()``` function.
 
 
 ```r
@@ -201,7 +203,7 @@ print(dataTrain.model)
 ## The final value used for the model was mtry = 29.
 ```
 
-Next we create a plot to visualise the accuracy of our model's predictions. The plot clearly shows our model to be very accurate.
+Next we create a plot to visualize the accuracy of our model's predictions. The plot clearly shows our model to be very accurate.
 
 
 ```r
@@ -212,7 +214,7 @@ print(
 
 <img src="./Report_files/figure-html/PvsA.png" title="plot of chunk PvsA" alt="plot of chunk PvsA" style="display: block; margin: auto;" />
 
-From both an Outside Error Rate Accuracy and an Cross Validation standpoint our model holds up very well.
+From both an Outside Error Rate Accuracy and a Cross Validation standpoint our model holds up very well.
 
 ### In Conclusion 
 We wrap up with the answers for the submission using a slightly modified version of the ```pml_write_files()``` function to create the 20 submission files. We call on ```predict(dataTrain.model, newdata=dataTest)``` to create our 20 predictions.
@@ -238,6 +240,8 @@ print(dataTest.predict)
 ##  [1] B A B A A E D B A A B C B A E E A B B B
 ## Levels: A B C D E
 ```
+
+Our model correctly predicted all 20 entries contained in the test data frame.
 
 ### Acknowledgement
 Velloso, E.; Bulling, A.; Gellersen, H.; Ugulino, W.; Fuks, H. [Qualitative Activity Recognition of Weight Lifting Exercises](http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201). Proceedings of 4th International Conference in Cooperation with SIGCHI (Augmented Human '13) . Stuttgart, Germany: ACM SIGCHI, 2013.
